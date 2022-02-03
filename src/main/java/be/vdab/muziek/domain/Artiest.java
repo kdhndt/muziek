@@ -4,6 +4,7 @@ import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -14,7 +15,7 @@ public class Artiest {
 
     @OneToMany(mappedBy = "artiest")
     @OrderBy("jaar")
-    private Set<Album> albums;
+    private Set<Album> albums = new LinkedHashSet<>();
 
     public Artiest(String naam) {
         this.naam = naam;

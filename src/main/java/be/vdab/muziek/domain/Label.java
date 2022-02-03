@@ -2,6 +2,7 @@ package be.vdab.muziek.domain;
 
 import javax.persistence.*;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,7 @@ public class Label {
 
     @OneToMany(mappedBy = "label")
     @OrderBy("jaar")
-    private Set<Album> albums;
+    private Set<Album> albums = new LinkedHashSet<>();
 
     public Label(String naam) {
         this.naam = naam;

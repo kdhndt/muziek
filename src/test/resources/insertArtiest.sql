@@ -1,2 +1,2 @@
 insert into artiesten(naam)
-values ('test');
+values ('testArtiest');

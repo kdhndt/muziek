@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments::head(title='Album')">
+</head>
+<body>
+<h1 th:text="|${album.naam} - ${album.artiest.naam} (${album.jaar}) ${album.label.naam}|"></h1>
+<ul>
+    <li th:each="track : ${album.tracks}" th:object="${track}" th:text="|*{naam} *{tijd}|"></li>
+</ul>
+<p>Totale tijd: <th:block th:text="${album.getTijd()}"></th:block></p>
+</body>
+</html>

@@ -1,2 +1,2 @@
 insert into labels(naam)
-values ('test');
+values ('testLabel');

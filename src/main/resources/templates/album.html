@@ -3,10 +3,20 @@
 <head th:replace="fragments::head(title='Album')">
 </head>
 <body>
-<h1 th:text="|${album.naam} - ${album.artiest.naam} (${album.jaar}) ${album.label.naam}|"></h1>
-<ul>
-    <li th:each="track : ${album.tracks}" th:object="${track}" th:text="|*{naam} *{tijd}|"></li>
-</ul>
-<p>Totale tijd: <th:block th:text="${album.getTijd()}"></th:block></p>
+<h1 th:if="not ${album}" th:text="|Album ${album.id} niet gevonden.|"></h1>
+
+<th:block th:if="${album}" th:object="${album}">
+    <h1 th:text="|*{naam} - *{artiest.naam} (*{jaar}) *{label.naam}|"></h1>
+    <ul>
+        <li th:each="track : ${album.tracks}" th:object="${track}" th:text="|*{naam} *{tijd}|"></li>
+    </ul>
+    <div>Totale tijd:
+        <th:block th:text="${album.tijd}"></th:block>
+    </div>
+    <form method="post" th:object="${scoreForm}" th:action="@{/album/{id}/score(id=${album.id})}">
+        <label>Score:<input th:field="*{score}" required type="number" min="0" max="10" autofocus><span th:errors="*{score}"></span></label>
+        <button>Wijzigen</button>
+    </form>
+</th:block>
 </body>
 </html>

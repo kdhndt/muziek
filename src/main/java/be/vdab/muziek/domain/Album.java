@@ -1,5 +1,7 @@
 package be.vdab.muziek.domain;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -10,45 +12,40 @@ import java.util.Set;
 
 
 @NamedEntityGraph(name = Album.MET_ARTIEST, attributeNodes = @NamedAttributeNode("artiest"))
-//todo: moet hier niet nog een graph komen voor de album pagina? er worden nl. meerdere queries uitgevoerd bij het bezoeken van album pagina
-
 @Entity
 @Table(name = "albums")
 public class Album {
+    public static final String MET_ARTIEST = "Album.metArtiest";
+
     @Id
     private long id;
     private String naam;
     private int jaar;
+    //geen getter voor nodig, dit is enkel voor equals en hashCode
     private long barcode;
+    @Range(min=0, max=10)
     private int score;
 
-    //verzameling value objects met een eigen type
-    //een album bestaat uit tracks, zonder album zijn er geen tracks
+    //verzameling value objects met een eigen type -- een album bestaat uit tracks, zonder album zijn er geen tracks
     @ElementCollection
     @CollectionTable(name = "tracks", joinColumns = @JoinColumn(name = "albumId"))
-//    @OrderBy("naam")
     private Set<Track> tracks = new LinkedHashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "artiestId")
-    //toegang tot artiest eigenschappen vanuit Album
     private Artiest artiest;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "labelId")
-    //toegang tot label eigenschappen vanuit Album
     private Label label;
 
-    public static final String MET_ARTIEST = "Album.metArtiest";
-    public static final String MET_ARTIEST_EN_LABEL = "Album.metArtiestEnLabel";
-
-    public Album(String naam, int jaar, long barcode, int score, Artiest artiest, Label label) {
+    public Album(String naam, int jaar, long barcode, int score/*, Artiest artiest, Label label*/) {
         this.naam = naam;
         this.jaar = jaar;
         this.barcode = barcode;
         this.score = score;
-        setArtiest(artiest);
-        setLabel(label);
+/*        setArtiest(artiest);
+        setLabel(label);*/
     }
 
     protected Album() {
@@ -64,15 +61,15 @@ public class Album {
         return totaal;
     }
 
-    public boolean addTrack(Track track) {
-        return tracks.add(track);
-    }
-
     public Set<Track> getTracks() {
         return Collections.unmodifiableSet(tracks);
     }
 
-    public void setArtiest(Artiest artiest) {
+    /*    public boolean addTrack(Track track) {
+        return tracks.add(track);
+    }*/
+
+/*    public void setArtiest(Artiest artiest) {
         if (!artiest.getAlbums().contains(this)) {
             artiest.add(this);
         }
@@ -84,12 +81,9 @@ public class Album {
             label.add(this);
         }
         this.label = label;
-    }
+    }*/
 
     public void setScore(int score) {
-        if (score < 0 || score > 10) {
-            throw new IllegalArgumentException();
-        }
         this.score = score;
     }
 
@@ -103,10 +97,6 @@ public class Album {
 
     public int getJaar() {
         return jaar;
-    }
-
-    public long getBarcode() {
-        return barcode;
     }
 
     public int getScore() {

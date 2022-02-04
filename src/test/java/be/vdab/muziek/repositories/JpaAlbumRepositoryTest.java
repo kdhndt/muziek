@@ -31,10 +31,16 @@ class JpaAlbumRepositoryTest extends AbstractTransactionalJUnit4SpringContextTes
         return jdbcTemplate.queryForObject("select id from albums where barcode = 5678", Long.class);
     }
 
+    //inclusief lazy loading test
     @Test
     void findById() {
         assertThat(repository.findById(idVanTestAlbum()))
-                .hasValueSatisfying(album -> assertThat(album.getNaam()).isEqualTo("testAlbum"));
+                .hasValueSatisfying(album -> {
+                    assertThat(album.getNaam()).isEqualTo("testAlbum");
+                    assertThat(album.getArtiest().getNaam()).isEqualTo("testArtiest");
+                    //tracks lezen
+                    assertThat(album.getTijd()).isEqualTo(LocalTime.of(23, 50, 26));
+                });
     }
 
     @Test
@@ -42,42 +48,19 @@ class JpaAlbumRepositoryTest extends AbstractTransactionalJUnit4SpringContextTes
         assertThat(repository.findById(-1L)).isNotPresent();
     }
 
+    //inclusief N+1 test
     @Test
     void findAll() {
-        assertThat(repository.findAll())
-                .hasSize(countRowsInTable(ALBUMS))
-                .extracting(Album::getNaam)
-                .isSorted();
-    }
-
-    //N+1 test
-    @Test
-    void testEntityGraph() {
         var albums = repository.findAll();
         manager.clear();
+        assertThat(albums)
+                .hasSize(countRowsInTable(ALBUMS))
+                .extracting(Album::getNaam)
+                .isSortedAccordingTo(String::compareToIgnoreCase);
+        //controle of de artiesten ook geladen zijn
         assertThat(albums)
                 .extracting(Album::getArtiest)
                 .extracting(Artiest::getNaam)
                 .isNotNull();
-    }
-
-    @Test
-    void tracksLezen() {
-        assertThat(repository.findById(idVanTestAlbum()))
-                .hasValueSatisfying(
-                        album -> assertThat(album.getTracks())
-                                .containsOnly(new Track("testTrack", LocalTime.of(23, 50, 26))));
-    }
-
-    @Test
-    void artiestLazyLoaded() {
-        assertThat(repository.findById(idVanTestAlbum()))
-                .hasValueSatisfying(album -> assertThat(album.getArtiest().getNaam()).isEqualTo("testArtiest"));
-    }
-
-    @Test
-    void labelLazyLoaded() {
-        assertThat(repository.findById(idVanTestAlbum()))
-                .hasValueSatisfying(album -> assertThat(album.getLabel().getNaam()).isEqualTo("testLabel"));
     }
 }

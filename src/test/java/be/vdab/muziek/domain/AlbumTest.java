@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 class AlbumTest {
-    private Artiest artiest1;
+   /* private Artiest artiest1;
     private Artiest artiest2;
     private Label label1;
     private Label label2;
@@ -64,5 +64,5 @@ class AlbumTest {
     @Test
     void eenNullArtiestInDeSetterMislukt() {
         assertThatNullPointerException().isThrownBy(() -> album1.setArtiest(null));
-    }
+    }*/
 }

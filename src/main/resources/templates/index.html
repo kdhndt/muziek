@@ -3,7 +3,7 @@
 <head th:replace="fragments::head(title='Welkom')">
 </head>
 <body>
-<h1>Welkom</h1>
+<h1>Albums</h1>
 <ul>
     <li th:each="album : ${albums}" th:object="${album}">
         <a th:text="|*{naam} - *{artiest.naam} - (*{jaar})|" th:href="@{/album/{id}(id=*{id})}"></a></li>

@@ -33,7 +33,7 @@ class DefaultAlbumService implements AlbumService {
 
     @Override
     public void wijzigScore(long id, int score) {
-        //todo: test of locken nodig is dmv breakpoint
+        //locken niet nodig?
         repository.findById(id)
                 .orElseThrow(AlbumNietGevondenException::new)
                 //record lezen en wijzigen in RAM geheugen zorgt ervoor dat JPA de database wijziging voor jou doet (geen JPQL query met update ... nodig)

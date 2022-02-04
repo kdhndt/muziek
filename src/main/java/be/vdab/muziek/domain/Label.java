@@ -11,9 +11,9 @@ public class Label {
     @Id private long id;
     String naam;
 
-    @OneToMany(mappedBy = "label")
+/*    @OneToMany(mappedBy = "label")
     @OrderBy("jaar")
-    private Set<Album> albums = new LinkedHashSet<>();
+    private Set<Album> albums = new LinkedHashSet<>();*/
 
     public Label(String naam) {
         this.naam = naam;
@@ -22,11 +22,11 @@ public class Label {
     protected Label() {
     }
 
-    public Set<Album> getAlbums() {
+/*    public Set<Album> getAlbums() {
         return Collections.unmodifiableSet(albums);
-    }
+    }*/
 
-    public boolean add(Album album) {
+/*    public boolean add(Album album) {
         var toegevoegd = albums.add(album);
         var vorigLabel = album.getLabel();
         if (vorigLabel != null && vorigLabel != this) {
@@ -36,7 +36,7 @@ public class Label {
             album.setLabel(this);
         }
         return toegevoegd;
-    }
+    }*/
 
     public long getId() {
         return id;

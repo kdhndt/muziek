@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${jaar}"></title>
+</head>
+<body>
+<ul>
+    <li th:each="album : ${albums}" th:object="${album}"></li>
+</ul>
+</body>
+</html>

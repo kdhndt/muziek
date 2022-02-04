@@ -9,4 +9,11 @@
             order by a.naam
         </query>
     </named-query>
+    <named-query name='Album.findByJaar'>
+        <query>
+            select a from Album a
+            where a.jaar = :jaar
+            order by a.naam
+        </query>
+    </named-query>
 </entity-mappings>

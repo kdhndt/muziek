@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface AlbumRepository {
     Optional<Album> findById(long id);
     List<Album> findAll();
+    List<Album> findByJaar(int jaar);
 }

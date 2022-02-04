@@ -40,4 +40,9 @@ class DefaultAlbumService implements AlbumService {
                 .setScore(score);
         
     }
+
+    @Override
+    public List<Album> findByJaar(int jaar) {
+        return repository.findByJaar(jaar);
+    }
 }

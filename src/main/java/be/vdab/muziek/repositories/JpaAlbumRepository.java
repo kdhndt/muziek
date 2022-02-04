@@ -26,4 +26,11 @@ class JpaAlbumRepository implements AlbumRepository {
                 .setHint("javax.persistence.loadgraph", manager.createEntityGraph("Album.metArtiest"))
                 .getResultList();
     }
+
+    @Override
+    public List<Album> findByJaar(int jaar) {
+        return manager.createNamedQuery("Album.findByJaar", Album.class)
+                .setParameter("jaar", jaar)
+                .getResultList();
+    }
 }

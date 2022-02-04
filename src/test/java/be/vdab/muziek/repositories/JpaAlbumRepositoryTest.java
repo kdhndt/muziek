@@ -63,4 +63,11 @@ class JpaAlbumRepositoryTest extends AbstractTransactionalJUnit4SpringContextTes
                 .extracting(Artiest::getNaam)
                 .isNotNull();
     }
+
+    @Test void findByJaar() {
+        var albums = repository.findByJaar(2002);
+        assertThat(albums)
+                .hasSize(countRowsInTableWhere(ALBUMS, "jaar = 2002"))
+                .allSatisfy(album -> assertThat(album.getJaar()).isEqualTo(2002));
+    }
 }

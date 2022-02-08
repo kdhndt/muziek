@@ -5,8 +5,9 @@
     <title th:text="${jaar}"></title>
 </head>
 <body>
+<h1 th:text="${jaar}"></h1>
 <ul>
-    <li th:each="album : ${albums}" th:object="${album}"></li>
+    <li th:each="album : ${albums}" th:object="${album}"><a th:text="|*{naam} - *{artiest.naam}|" th:href="@{/album/{id}(id=*{id})}"></a></li>
 </ul>
 </body>
 </html>

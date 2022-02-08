@@ -31,6 +31,8 @@ class JpaAlbumRepository implements AlbumRepository {
     public List<Album> findByJaar(int jaar) {
         return manager.createNamedQuery("Album.findByJaar", Album.class)
                 .setParameter("jaar", jaar)
+                .setHint("javax.persistence.loadgraph", manager.createEntityGraph("Album.metArtiest"))
                 .getResultList();
     }
+
 }

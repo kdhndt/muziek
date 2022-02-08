@@ -13,9 +13,9 @@ public class Artiest {
     @Id private long id;
     private String naam;
 
-/*    @OneToMany(mappedBy = "artiest")
-    @OrderBy("jaar")
-    private Set<Album> albums = new LinkedHashSet<>();*/
+    @OneToMany(mappedBy = "artiest")
+    @OrderBy("naam")
+    private Set<Album> albums = new LinkedHashSet<>();
 
     public Artiest(String naam) {
         this.naam = naam;
@@ -23,10 +23,10 @@ public class Artiest {
 
     protected Artiest() {
     }
-/*
+
     public Set<Album> getAlbums() {
         return Collections.unmodifiableSet(albums);
-    }*/
+    }
 
 /*    public boolean add(Album album) {
         var toegevoegd = albums.add(album);

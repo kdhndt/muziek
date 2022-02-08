@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${artiest} ? ${artiest.naam} : 'Artiest niet gevonden'"></title>
+</head>
+<body>
+<h1 th:if="not ${artiest}" th:text="|Artiest ${id} niet gevonden.|"></h1>
+<th:block th:if="${artiest}" th:object="${artiest}">
+    <h1 th:text="*{naam}"></h1>
+    <ul>
+        <li th:each="album:*{albums}" th:object="${album}">
+            <a th:href="@{/album/{id}(id=*{id})}"
+               th:text="|*{naam} (*{jaar})|"></a>
+        </li>
+    </ul>
+</th:block>
+</body>
+</html>

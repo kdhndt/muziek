@@ -42,7 +42,9 @@ class DefaultAlbumService implements AlbumService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Album> findByJaar(int jaar) {
         return repository.findByJaar(jaar);
     }
+
 }

@@ -1,5 +1,6 @@
 package be.vdab.muziek.domain;
 
+import org.hibernate.annotations.GeneratorType;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
@@ -39,13 +40,13 @@ public class Album {
     @JoinColumn(name = "labelId")
     private Label label;
 
-    public Album(String naam, int jaar, long barcode, int score/*, Artiest artiest, Label label*/) {
+    public Album(String naam, int jaar, long barcode, int score/*, Artiest artiest*//*, Label label*/) {
         this.naam = naam;
         this.jaar = jaar;
         this.barcode = barcode;
         this.score = score;
-/*        setArtiest(artiest);
-        setLabel(label);*/
+//        setArtiest(artiest);
+//        setLabel(label);
     }
 
     protected Album() {
@@ -74,9 +75,9 @@ public class Album {
             artiest.add(this);
         }
         this.artiest = artiest;
-    }
+    }*/
 
-    public void setLabel(Label label) {
+/*    public void setLabel(Label label) {
         if (!label.getAlbums().contains(this)) {
             label.add(this);
         }

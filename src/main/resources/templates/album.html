@@ -7,9 +7,12 @@
 
 <th:block th:if="${album}" th:object="${album}">
 
-    <h1 th:text="|*{naam} - *{artiest.naam} |"></h1>
-    <a th:text="*{jaar}" th:href="@{/album/{jaar}(jaar=*{jaar})}"></a>
-    <h1 th:text="| *{label.naam}|"></h1>
+    <h1>
+        <th:block th:text="*{naam}"></th:block>
+        <a th:text="*{artiest.naam}" th:href="@{/artiest/{id}(id=*{artiest.id})}"></a>
+        <a th:text="*{jaar}" th:href="@{/album/jaar/{jaar}(jaar=*{jaar})}"></a>
+        <th:block th:text="| *{label.naam}|"></th:block>
+    </h1>
 
     <ul>
         <li th:each="track : ${album.tracks}" th:object="${track}" th:text="|*{naam} *{tijd}|"></li>

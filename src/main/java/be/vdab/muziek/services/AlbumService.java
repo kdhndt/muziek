@@ -10,5 +10,4 @@ public interface AlbumService {
     List<Album> findAll();
     void wijzigScore(long id, int score);
     List<Album> findByJaar(int jaar);
-
 }

@@ -65,9 +65,36 @@ class JpaAlbumRepositoryTest extends AbstractTransactionalJUnit4SpringContextTes
     }
 
     @Test void findByJaar() {
-        var albums = repository.findByJaar(2002);
+        var albums = repository.findByJaar(1999);
+        manager.clear();
         assertThat(albums)
-                .hasSize(countRowsInTableWhere(ALBUMS, "jaar = 2002"))
-                .allSatisfy(album -> assertThat(album.getJaar()).isEqualTo(2002));
+                .hasSize(countRowsInTableWhere(ALBUMS, "jaar = 1999"))
+                .allSatisfy(album -> assertThat(album.getJaar()).isEqualTo(1999))
+                .extracting(Album::getNaam)
+                .isSortedAccordingTo(String::compareToIgnoreCase);
+        assertThat(albums)
+                .extracting(Album::getArtiest)
+                .extracting(Artiest::getNaam)
+                .isNotNull();
+    }
+
+/*    @Test void findByArtiest() {
+        var albums = repository.findByArtiest("testArtiest");
+        manager.clear();
+        assertThat(albums)
+//                .hasSize(countRowsInTableWhere(ALBUMS, "id=" + ARTIESTID))
+                .allSatisfy(album -> assertThat(album.getArtiest().getNaam()).isEqualTo("testArtiest"))
+                .extracting(Album::getNaam)
+                .isSortedAccordingTo(String::compareToIgnoreCase);
+        //n+1 controle
+        assertThat(albums)
+                .extracting(Album::getArtiest)
+                .extracting(Artiest::getNaam)
+                .isNotNull();
+    }*/
+
+    @Test void artiestLazyLoaded() {
+        assertThat(repository.findById(idVanTestAlbum()))
+                .hasValueSatisfying(album -> assertThat(album.getArtiest().getNaam()).isEqualTo("testArtiest"));
     }
 }

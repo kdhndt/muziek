@@ -31,9 +31,9 @@ class DefaultAlbumServiceTest {
     @BeforeEach
     void beforeEach() {
         service = new DefaultAlbumService(repository);
-/*        var artiest1 = new Artiest("testArtiest1");
-        var label1 = new Label("testLabel1");*/
-        album = new Album("test", 2022, 9999L, 5/*, artiest1, label1*/);
+        var artiest1 = new Artiest("testArtiest1");
+//        var label1 = new Label("testLabel1");
+        album = new Album("test", 2022, 9999L, 5/*, artiest1*//*, label1*/);
     }
 
     @Test

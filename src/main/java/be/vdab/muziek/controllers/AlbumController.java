@@ -57,9 +57,10 @@ public class AlbumController {
         }
     }
 
-    @GetMapping("{jaar}")
+    //jaar moet hier niet nogmaals als object meegegeven worden, ${jaar} is toegankelijk in HTML pagina vanwege aangemaakte bean?
+    @GetMapping("jaar/{jaar}")
     public ModelAndView albumsVanJaar(@PathVariable int jaar) {
         var modelAndView = new ModelAndView("jaar");
-        return modelAndView.addObject(jaar).addObject("albums", albumService.findByJaar(jaar));
+        return modelAndView.addObject("albums", albumService.findByJaar(jaar));
     }
 }
